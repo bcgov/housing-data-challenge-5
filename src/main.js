@@ -1,4 +1,5 @@
 import Vue from 'vue';
+// main app / layout component
 import App from './components/App.vue';
 import store from './store';
 
