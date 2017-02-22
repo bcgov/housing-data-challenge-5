@@ -42,7 +42,6 @@ export default {
 @import '~leaflet/dist/leaflet.css';
 
 #map {
-    height: 100%;
-    min-height: 300px;
+    height: 55vh;
 }
 </style>

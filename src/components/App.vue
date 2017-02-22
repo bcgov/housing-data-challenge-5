@@ -1,10 +1,25 @@
 <template>
 <div id="app" class="container">
-    <section class="section">
-        <div class="box">
-            <map-viz></map-viz>
+
+    <map-viz></map-viz>
+
+    <section class="filters">
+        <div class="controls">
+            filter-controls
+        </div>
+        <div class="list">
+            <div class="filter">
+                filter 1
+            </div>
+            <div class="filter">
+                filter 2
+            </div>
+            <div class="filter">
+                filter 3
+            </div>
         </div>
     </section>
+
 </div>
 </template>
 
@@ -29,5 +44,42 @@ $primary: #f26721; // Foundry Spatial orange
 // base font size
 html {
     font-size: 18px;
+}
+
+// full-height layout
+html, body {
+    height: 100%;
+    min-height:440px;
+}
+
+#app {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+
+.filters {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    .controls {
+        min-height: 4rem;
+        margin-bottom: .25rem;
+    }
+
+    .list {
+        flex-grow: 1;
+        display: flex;
+        flex-flow: column;
+    }
+
+    .filter {
+        flex-grow: 1;
+        &:not(:last-child) {
+            margin-bottom: .25rem;
+        }
+    }
 }
 </style>
