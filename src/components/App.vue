@@ -10,14 +10,8 @@
             filter-controls <button @click="showFilterPicker">pick filters</button>
         </div>
         <div class="list">
-            <div class="filter">
-                filter 1
-            </div>
-            <div class="filter">
-                filter 2
-            </div>
-            <div class="filter">
-                filter 3
+            <div v-for="filter in enabledFilters" class="filter">
+                a filter.. {{filter}}
             </div>
         </div>
     </section>
@@ -40,6 +34,11 @@ export default {
     components: {
         'map-viz': MapViz,
         'filter-picker': FilterPicker,
+    },
+    computed: {
+        enabledFilters() {
+            return store.state.enabledFilters;
+        },
     },
     methods: {
         showFilterPicker() {

@@ -7,6 +7,7 @@ export default new Vuex.Store({
     state: {
         map: {},
         showFilterPicker: false,
+        enabledFilters: ['hello', 'world', 'foobar'],
     },
     mutations: {
         setMap(state, map) {
@@ -14,6 +15,11 @@ export default new Vuex.Store({
         },
         showFilterPicker(state, show) {
             Vue.set(state, 'showFilterPicker', show);
+        },
+        enableFilter(state, filter) {
+            if (state.enabledFilters.length < 3) {
+                state.enabledFilters.push(filter);
+            }
         },
     },
 });
