@@ -1,11 +1,13 @@
 <template>
 <div id="app" class="container">
 
+    <!-- map visualization  -->
     <map-viz></map-viz>
 
+    <!-- list of active filters + their controls -->
     <section class="filters">
         <div class="controls">
-            filter-controls
+            filter-controls <button @click="showFilterPicker">pick filters</button>
         </div>
         <div class="list">
             <div class="filter">
@@ -20,16 +22,29 @@
         </div>
     </section>
 
+    <!-- modal window for picking active filters -->
+    <filter-picker></filter-picker>
+
 </div>
 </template>
 
 <script>
+// vuex store
+import store from '../store';
+// components
+import FilterPicker from './FilterPicker.vue';
 import MapViz from './Map.vue';
 
 export default {
     name: 'app',
     components: {
         'map-viz': MapViz,
+        'filter-picker': FilterPicker,
+    },
+    methods: {
+        showFilterPicker() {
+            store.commit('showFilterPicker', true);
+        },
     },
 };
 </script>
@@ -56,15 +71,18 @@ html, body {
     height: 100%;
     display: flex;
     flex-flow: column;
+    background: #00d8ff; /////////////
 }
 
 .filters {
+    background: #d44; /////////
     flex-grow: 1;
 
     display: flex;
     flex-direction: column;
 
     .controls {
+        background: #DD4; ////////////
         min-height: 4rem;
         margin-bottom: .25rem;
     }
@@ -73,6 +91,7 @@ html, body {
         flex-grow: 1;
         display: flex;
         flex-flow: column;
+        background: #44D; /////////
     }
 
     .filter {
@@ -80,6 +99,8 @@ html, body {
         &:not(:last-child) {
             margin-bottom: .25rem;
         }
+
+        background: #4C4; ///////////
     }
 }
 </style>
