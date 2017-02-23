@@ -4,7 +4,7 @@
     <div class="modal-content">
         <div class="panel">
             <p class="panel-heading">
-                Select up to 3 filters
+                Select up to {{ maxFilters }} filters
                 <button class="delete is-medium is-pulled-right" @click="closeModal"></button>
             </p>
             <label v-for="filter in filters" class="panel-block checkbox" :class="{ 'is-disabled': disabled(filter.name) }">
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+// config
+import config from '../app.config';
 // vuex store
 import store from '../store';
 // available filters
@@ -36,6 +38,8 @@ export default {
             checkedFilters: [],
             // all available filter objects
             filters,
+            // maximum number of active filters
+            maxFilters: config.maxFilters,
         };
     },
     computed: {
@@ -54,7 +58,7 @@ export default {
             // if the filter is in the array ("checked")
             const checked = this.checkedFilters.indexOf(filterName) > -1;
             // if the array is full
-            const arrayFull = this.checkedFilters.length >= 3; // @TODO: move to app.config.js
+            const arrayFull = this.checkedFilters.length >= config.maxFilters;
             return arrayFull && !checked;
         },
     },
