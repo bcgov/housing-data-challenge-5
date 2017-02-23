@@ -2,11 +2,14 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-    entry: './src/main.js',
+    entry: {
+        vendor: ['vue', 'leaflet'],
+        main: './src/main.js',
+    },
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
-        filename: 'build.js',
+        filename: '[name].bundle.js',
     },
     module: {
         rules: [
@@ -71,6 +74,9 @@ if (process.env.NODE_ENV === 'production') {
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true,
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
         }),
     ]);
 }
