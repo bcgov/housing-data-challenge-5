@@ -1,6 +1,7 @@
 import Vue from 'vue';
 // main app / layout component
 import App from './components/App.vue';
+// vuex store
 import store from './store';
 
 /* eslint-disable no-new */

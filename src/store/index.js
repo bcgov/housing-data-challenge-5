@@ -8,7 +8,11 @@ export default new Vuex.Store({
     state: {
         map: {},
         showFilterPicker: false,
-        enabledFilters: [filters.heightFilter, filters.widthFilter, filters.colorFilter],
+        enabledFilters: [
+            filters.heightFilter,
+            filters.distanceFilter,
+            filters.colorFilter,
+        ],
     },
     mutations: {
         setMap(state, map) {
@@ -17,10 +21,12 @@ export default new Vuex.Store({
         showFilterPicker(state, show) {
             Vue.set(state, 'showFilterPicker', show);
         },
-        enableFilter(state, filter) {
-            if (state.enabledFilters.length < 3) {
-                state.enabledFilters.push(filter);
-            }
+        setFilters(state, filterNames = []) {
+            const newFilters = [];
+            filterNames.forEach((filterName) => {
+                newFilters.push(filters[filterName]);
+            });
+            Vue.set(state, 'enabledFilters', newFilters);
         },
     },
 });

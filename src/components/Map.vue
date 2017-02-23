@@ -5,7 +5,11 @@
 </template>
 
 <script>
+// import libraries
 import L from 'leaflet';
+
+// vuex store
+import store from '../store';
 
 // workaround for leaflet 1.0.3 bug with webpack
 /* eslint-disable no-underscore-dangle, global-require */
@@ -32,7 +36,7 @@ export default {
             .openPopup();
 
         // centralize the map object in the store
-        this.$store.commit('setMap', map);
+        store.commit('setMap', map);
     },
 };
 </script>
