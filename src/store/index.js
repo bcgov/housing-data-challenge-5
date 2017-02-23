@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import filters from '../filters';
 
 Vue.use(Vuex);
 
@@ -7,7 +8,7 @@ export default new Vuex.Store({
     state: {
         map: {},
         showFilterPicker: false,
-        enabledFilters: ['hello', 'world', 'foobar'],
+        enabledFilters: [filters.heightFilter, filters.widthFilter, filters.colorFilter],
     },
     mutations: {
         setMap(state, map) {

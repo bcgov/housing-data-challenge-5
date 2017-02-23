@@ -11,7 +11,8 @@
         </div>
         <div class="list">
             <div v-for="filter in enabledFilters" class="filter">
-                a filter.. {{filter}}
+                a filter.. {{ filter.name }} .. filters on {{ filter.fieldName }}
+                <component :is="filter.component"></component>
             </div>
         </div>
     </section>
