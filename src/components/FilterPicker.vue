@@ -1,5 +1,4 @@
 <template>
-<div>
 <div class="modal is-active" v-show="showModal">
     <div class="modal-background"></div>
     <div class="modal-content">
@@ -15,7 +14,6 @@
         </ul>
     </div>
     <button class="modal-close" @click="closeModal"></button>
-</div>
 </div>
 </template>
 
