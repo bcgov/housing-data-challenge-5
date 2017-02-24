@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        vendor: ['vue', 'leaflet'],
+        vendor: ['vue', 'mapbox-gl/dist/mapbox-gl'],
         main: './src/main.js',
     },
     output: {
