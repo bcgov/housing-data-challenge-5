@@ -67,20 +67,23 @@ $primary: #f26721; // Foundry Spatial orange
 
 // base font size
 html {
-    font-size: 18px;
+    font-size: 14px;
+    @include tablet {
+        font-size: 18px;
+    }
 }
 
 // full-height layout
 html, body {
     height: 100%;
     min-height:440px;
+    background: $white-ter;
 }
 
 #app {
     height: 100%;
     display: flex;
     flex-flow: column;
-    background: #00d8ff; /////////////
 }
 
 .filters {
