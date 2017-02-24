@@ -14,6 +14,15 @@
                 a filter.. {{ filter.name }} .. filters on {{ filter.fieldName }}
                 <component :is="filter.component"></component>
             </div>
+            <div v-if="enabledFilters.length === 0" class="empty has-text-centered">
+                <div class="block">
+                    <h2 class="title">No filters selected</h2>
+                    <p class="subtitle">Use filters to create meaningful visualizations</p>
+                </div>
+                <div>
+                    <button class="button is-dark" @click="showFilterPicker">Select some filters</button>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -101,6 +110,14 @@ html, body {
         }
 
         background: #4C4; ///////////
+    }
+
+    .empty {
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        background: $grey-lighter;
+        flex-grow: 1;
     }
 }
 </style>
