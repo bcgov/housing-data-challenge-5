@@ -6,9 +6,30 @@
 
     <!-- list of active filters + their controls -->
     <section class="filters">
-        <div class="controls">
-            filter-controls <button @click="showFilterPicker">pick filters</button>
-        </div>
+        <nav class="nav controls">
+            <div class="nav-left">
+                <div class="nav-item">
+                    <button @click="showFilterPicker" class="button is-primary">Select filters</button>
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <div class="nav-item">
+                    <div class="control is-horizontal">
+                        <div class="control-label">
+                            <label class="label">Colors:</label>
+                        </div>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select>
+                                    <option>Avg. Income</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
         <div class="list">
             <div v-for="filter in enabledFilters" class="filter">
                 a filter.. {{ filter.name }} .. filters on {{ filter.fieldName }}
@@ -87,16 +108,13 @@ html, body {
 }
 
 .filters {
-    background: #d44; /////////
     flex-grow: 1;
-
     display: flex;
     flex-direction: column;
 
     .controls {
-        background: #DD4; ////////////
-        min-height: 4rem;
-        margin-bottom: .25rem;
+        box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+        border-width: 1px 0;
     }
 
     .list {
