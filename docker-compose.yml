@@ -1,9 +1,8 @@
 version: '2'
 services:
     web:
-        image: nginx:alpine
-        volumes:
-            - ./dist:/usr/share/nginx/html/dist
-            - ./index.html:/usr/share/nginx/html/index.html
+        build:
+            context: .
+            dockerfile: Dockerfile
         ports:
             - "80:80"
