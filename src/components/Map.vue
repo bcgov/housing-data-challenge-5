@@ -13,19 +13,50 @@ import config from '../app.config';
 // vuex store
 import store from '../store';
 
+import mapColors from '../mapColors';
+
 export default {
     name: 'map-viz',
+    data() {
+        return {
+            map: {},
+            layers: config.map.dataLayers,
+        };
+    },
     mounted() {
         mapboxgl.accessToken = config.mapboxgl.accessToken;
-        const map = new mapboxgl.Map({
+        this.map = new mapboxgl.Map({
             container: 'map',
             style: config.mapboxgl.baseStyle,
             center: config.map.center,
             zoom: config.map.zoom,
         });
 
-        // centralize the map object in the store
-        store.commit('setMap', map);
+        this.map.on('style.load', () => {
+            // apply default colors
+            this.updateColors(this.colorField);
+
+            // centralize the map object in the store
+            store.commit('setMap', this.map);
+        });
+    },
+    computed: {
+        colorField() {
+            return store.state.mapColorField;
+        },
+    },
+    methods: {
+        updateColors(val) {
+            const paintProperty = mapColors[val].paintProperty();
+            this.layers.forEach((layer) => {
+                this.map.setPaintProperty(layer, 'fill-color', paintProperty);
+            });
+        },
+    },
+    watch: {
+        colorField(val) {
+            this.updateColors(val);
+        },
     },
 };
 </script>
