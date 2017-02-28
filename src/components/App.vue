@@ -21,9 +21,7 @@
                         </div>
                         <div class="control">
                             <div class="select is-fullwidth">
-                                <select>
-                                    <option>Avg. Income</option>
-                                </select>
+                                <map-color-picker></map-color-picker>
                             </div>
                         </div>
                     </div>
@@ -58,6 +56,7 @@
 import store from '../store';
 // components
 import FilterPicker from './FilterPicker.vue';
+import ColorPicker from './MapColorPicker.vue';
 import MapViz from './Map.vue';
 
 export default {
@@ -65,6 +64,7 @@ export default {
     components: {
         'map-viz': MapViz,
         'filter-picker': FilterPicker,
+        'map-color-picker': ColorPicker,
     },
     computed: {
         enabledFilters() {

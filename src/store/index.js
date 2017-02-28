@@ -15,6 +15,7 @@ export default new Vuex.Store({
             filters.distanceFilter,
             filters.colorFilter,
         ],
+        mapColorField: config.map.colorField,
     },
     mutations: {
         setMap(state, map) {
@@ -30,6 +31,9 @@ export default new Vuex.Store({
             });
             newFilters = newFilters.slice(0, config.maxFilters);
             Vue.set(state, 'enabledFilters', newFilters);
+        },
+        changeMapColorField(state, fieldName) {
+            Vue.set(state, 'mapColorField', fieldName);
         },
     },
 });
