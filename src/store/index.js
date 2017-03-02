@@ -11,9 +11,9 @@ export default new Vuex.Store({
         map: {},
         showFilterPicker: false,
         enabledFilters: [
-            filters.heightFilter,
-            filters.distanceFilter,
-            filters.colorFilter,
+            filters.singleLangSpeakers,
+            filters.multiLangSpeakers,
+            filters.adults1830,
         ],
         mapColorField: config.map.colorField,
     },
