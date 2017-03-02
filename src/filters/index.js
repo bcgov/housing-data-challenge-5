@@ -1,13 +1,6 @@
 import exampleComponent from './ExampleFilter.vue';
 import exampleComponent2 from './ExampleFilter2.vue';
-
-class Filter {
-    constructor(name, component, config) {
-        this.name = name;
-        this.component = component;
-        this.config = config;
-    }
-}
+import Filter from './class/Filter';
 
 const heightFilter = new Filter('heightFilter', exampleComponent, { field: 'height' });
 const widthFilter = new Filter('widthFilter', exampleComponent2, { field: 'width' });
