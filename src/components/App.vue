@@ -30,8 +30,7 @@
         </nav>
         <div class="list">
             <div v-for="filter in enabledFilters" class="filter">
-                a filter.. {{ filter.name }} .. filters on {{ filter.fieldName }}
-                <component :is="filter.component"></component>
+                <component :is="filter.component" :filterObject="filter"></component>
             </div>
             <div v-if="enabledFilters.length === 0" class="empty has-text-centered">
                 <div class="block">
@@ -129,8 +128,7 @@ html, body {
         &:not(:last-child) {
             margin-bottom: .25rem;
         }
-
-        background: #4C4; ///////////
+        display: flex;
     }
 
     .empty {
