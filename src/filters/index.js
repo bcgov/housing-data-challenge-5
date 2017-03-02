@@ -10,7 +10,7 @@ const weightFilter = new Filter('weightFilter', exampleComponent2, { field: 'wei
 const dateFilter = new Filter('dateFilter', exampleComponent, { field: 'date' });
 const timeFilter = new Filter('timeFilter', exampleComponent, { field: 'time' });
 
-export default {
+const filters = {
     heightFilter,
     widthFilter,
     colorFilter,
@@ -18,4 +18,14 @@ export default {
     weightFilter,
     dateFilter,
     timeFilter,
+    singleLangSpeakers,
+    multiLangSpeakers,
+    adults1830,
 };
+
+// add the key name to each object for easy retrieval
+Object.keys(filters).forEach((filter) => {
+    filters[filter].keyName = filter;
+});
+
+export default filters;
