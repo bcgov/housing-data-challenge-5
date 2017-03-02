@@ -1,5 +1,5 @@
 <template>
-<div class="filter">
+<div class="filter-body">
     <label>this is some filter or other</label>
     <input type="range">
 </div>
