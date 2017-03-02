@@ -35,5 +35,8 @@ export default new Vuex.Store({
         changeMapColorField(state, fieldName) {
             Vue.set(state, 'mapColorField', fieldName);
         },
+        changeMapView(state, mapView) {
+            Vue.set(state, 'mapView', mapView);
+        },
     },
 });

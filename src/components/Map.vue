@@ -39,6 +39,20 @@ export default {
             // centralize the map object in the store
             store.commit('setMap', this.map);
         });
+
+        // track map view in the store
+        this.map.on('moveend', () => {
+            const zoom = this.map.getZoom();
+            const bounds = this.map.getBounds();
+            const bearing = this.map.getBearing();
+            const pitch = this.map.getPitch();
+            store.commit('changeMapView', {
+                zoom,
+                bounds,
+                bearing,
+                pitch,
+            });
+        });
     },
     computed: {
         colorField() {
