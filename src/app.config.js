@@ -6,6 +6,7 @@ export default {
         zoom: 9.5,
         colorField: 'multi_language_total',
         dataLayers: [
+            'abms-province',
             'census-dissemination-areas',
             'census-subdivisions',
             'census-divisions',
