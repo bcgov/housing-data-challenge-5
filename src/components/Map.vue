@@ -39,7 +39,6 @@ export default {
             // centralize the map object in the store
             store.commit('setMap', this.map);
         });
-
         // track map view in the store
         this.map.on('moveend', () => {
             const zoom = this.map.getZoom();
@@ -52,6 +51,7 @@ export default {
                 bearing,
                 pitch,
             });
+            this.setMapPropertiesMinMax();
         });
     },
     computed: {
@@ -61,10 +61,34 @@ export default {
     },
     methods: {
         updateColors(val) {
+            console.log( "Update Colours!!" );
             const paintProperty = mapColors[val].paintProperty();
             this.layers.forEach((layer) => {
                 this.map.setPaintProperty(layer, 'fill-color', paintProperty);
             });
+        },
+        setMapPropertiesMinMax(){
+
+            //create a list of properties and their min/max values.
+            var minmax = {}
+            var valueBuckets = {}
+            Object.keys( mapColors ).forEach( ( key ) => {
+                minmax[key] = {min:undefined, max:undefined};
+                valueBuckets[key] = [];
+            });
+            
+            this.map.queryRenderedFeatures( { layers: config.map.dataLayers } ).forEach( (feature) => {
+                Object.keys( mapColors ).forEach( ( key ) => {
+                    valueBuckets[key].push(feature.properties[key]);
+                    if( minmax[key].min == undefined || minmax[key].min > feature.properties[key] ){
+                        minmax[key].min = feature.properties[key];
+                    }
+                    if( minmax[key].max == undefined || minmax[key].max < feature.properties[key] ){
+                        minmax[key].max = feature.properties[key];
+                    }
+                });
+            });
+            store.commit('setCurrentViewValues', { "extrema":minmax, "all":valueBuckets });
         },
     },
     watch: {
