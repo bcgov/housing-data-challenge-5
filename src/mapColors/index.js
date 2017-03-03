@@ -3,12 +3,12 @@
  * with hardcoded colors from colorbrewer
  */
 export default {
-    single_language_total: {
+    ml_311: {
         name: 'Single Language Speakers',
-        value: 'single_language_total',
+        value: 'ml_311',
         paintProperty() {
             return {
-                property: 'single_language_total',
+                property: 'ml_311',
                 stops: [
                   [0, '#edf8e9'],
                   [100, '#c7e9c0'],
@@ -21,12 +21,12 @@ export default {
             };
         },
     },
-    multi_language_total: {
+    ml_22811: {
         name: 'Multiple Language Speakers',
-        value: 'multi_language_total',
+        value: 'ml_22811',
         paintProperty() {
             return {
-                property: 'multi_language_total',
+                property: 'ml_22811',
                 stops: [
                   [0, '#f1eef6'],
                   [100, '#d4b9da'],
@@ -39,12 +39,12 @@ export default {
             };
         },
     },
-    age_18_30_m: {
+    cp_141516172: {
         name: 'Adults 18-30',
-        value: 'age_18_30_m',
+        value: 'cp_141516172',
         paintProperty() {
             return {
-                property: 'age_18_30_m',
+                property: 'cp_141516172',
                 stops: [
                   [0, '#f1eef6'],
                   [100, '#d0d1e6'],

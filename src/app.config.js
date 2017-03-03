@@ -4,7 +4,7 @@ export default {
     map: {
         center: [-123.12, 49.28],
         zoom: 9.5,
-        colorField: 'multi_language_total',
+        colorField: 'ml_22811',
         dataLayers: [
             'abms-province',
             'census-dissemination-areas',
