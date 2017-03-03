@@ -89,7 +89,7 @@ svg {
 
     .bar {
         rect {
-          fill: steelblue;
+          fill: #e6550d;
         }
 
         text {

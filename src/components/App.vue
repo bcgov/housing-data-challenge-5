@@ -120,7 +120,6 @@ html, body {
         flex-grow: 1;
         display: flex;
         flex-flow: column;
-        background: #44D; /////////
     }
 
     .filter {
