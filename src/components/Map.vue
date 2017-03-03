@@ -35,9 +35,10 @@ export default {
         this.map.on('style.load', () => {
             // apply default colors
             this.updateColors(this.colorField);
-
             // centralize the map object in the store
             store.commit('setMap', this.map);
+            // initialize the data for view information.
+            this.setMapPropertiesMinMax();
         });
         // track map view in the store
         this.map.on('moveend', () => {
@@ -61,34 +62,34 @@ export default {
     },
     methods: {
         updateColors(val) {
-            console.log( "Update Colours!!" );
             const paintProperty = mapColors[val].paintProperty();
             this.layers.forEach((layer) => {
                 this.map.setPaintProperty(layer, 'fill-color', paintProperty);
             });
         },
-        setMapPropertiesMinMax(){
-
-            //create a list of properties and their min/max values.
-            var minmax = {}
-            var valueBuckets = {}
-            Object.keys( mapColors ).forEach( ( key ) => {
-                minmax[key] = {min:undefined, max:undefined};
+        setMapPropertiesMinMax() {
+            // create a list of properties and their min/max values.
+            const minmax = {}; // for annoying eslint rules.
+            const valueBuckets = {};
+            Object.keys(mapColors).forEach((key) => {
+                minmax[key] = { min: undefined, max: undefined };
                 valueBuckets[key] = [];
             });
-            
-            this.map.queryRenderedFeatures( { layers: config.map.dataLayers } ).forEach( (feature) => {
-                Object.keys( mapColors ).forEach( ( key ) => {
+
+            this.map.queryRenderedFeatures({ layers: config.map.dataLayers }).forEach((feature) => {
+                Object.keys(mapColors).forEach((key) => {
                     valueBuckets[key].push(feature.properties[key]);
-                    if( minmax[key].min == undefined || minmax[key].min > feature.properties[key] ){
+                    if (minmax[key].min === undefined
+                        || minmax[key].min > feature.properties[key]) {
                         minmax[key].min = feature.properties[key];
                     }
-                    if( minmax[key].max == undefined || minmax[key].max < feature.properties[key] ){
+                    if (minmax[key].max === undefined
+                        || minmax[key].max < feature.properties[key]) {
                         minmax[key].max = feature.properties[key];
                     }
                 });
             });
-            store.commit('setCurrentViewValues', { "extrema":minmax, "all":valueBuckets });
+            store.commit('setCurrentViewValues', { extrema: minmax, all: valueBuckets });
         },
     },
     watch: {
