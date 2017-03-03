@@ -16,3 +16,9 @@ yarn run build
 ```
 
 For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Load the app on your system
+
+You will need to have docker and docker-compose installed.
+
+To run the application on your system, listening on port 80, simply run `docker-compose up` in the top level directory of the repo.

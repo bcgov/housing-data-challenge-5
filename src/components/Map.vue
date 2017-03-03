@@ -34,14 +34,17 @@ export default {
 
         this.map.on('style.load', () => {
             // apply default colors
-            this.updateColors(this.colorField);
+//            this.updateColors(this.colorField);
             // centralize the map object in the store
             store.commit('setMap', this.map);
             // initialize the data for view information.
+        });
+        this.map.on('load', () => {
             this.setMapPropertiesMinMax();
         });
         // track map view in the store
         this.map.on('moveend', () => {
+            this.setMapPropertiesMinMax();
             const zoom = this.map.getZoom();
             const bounds = this.map.getBounds();
             const bearing = this.map.getBearing();
@@ -52,7 +55,6 @@ export default {
                 bearing,
                 pitch,
             });
-            this.setMapPropertiesMinMax();
         });
     },
     computed: {
@@ -71,13 +73,24 @@ export default {
             // create a list of properties and their min/max values.
             const minmax = {}; // for annoying eslint rules.
             const valueBuckets = {};
-            Object.keys(mapColors).forEach((key) => {
-                minmax[key] = { min: undefined, max: undefined };
-                valueBuckets[key] = [];
-            });
+            const stops = {};
 
-            this.map.queryRenderedFeatures({ layers: config.map.dataLayers }).forEach((feature) => {
-                Object.keys(mapColors).forEach((key) => {
+            // assume the colorField is the only one we want to figure out right now.
+
+            const key = this.colorField;
+
+            minmax[key] = { min: undefined, max: undefined };
+            valueBuckets[key] = [];
+            const paintProperty = mapColors[key].paintProperty();
+            stops[key] = paintProperty.stops;
+
+            // I don't think this actually gives us much of a speed boost
+            const tr = this.map.project(this.map.getBounds().getNorthEast());
+            const bl = this.map.project(this.map.getBounds().getSouthWest());
+
+            this.map.queryRenderedFeatures(
+                [tr, bl],
+                { layers: config.map.dataLayers }).forEach((feature) => {
                     valueBuckets[key].push(feature.properties[key]);
                     if (minmax[key].min === undefined
                         || minmax[key].min > feature.properties[key]) {
@@ -88,6 +101,13 @@ export default {
                         minmax[key].max = feature.properties[key];
                     }
                 });
+            const count = stops[key].length;
+            const incr = (minmax[key].max - minmax[key].min) / count;
+            for (let i = 0; i < count; i += 1) {
+                stops[key][i] = [Math.round(minmax[key].min + (incr * i)), stops[key][i][1]];
+            }
+            this.layers.forEach((layer) => {
+                this.map.setPaintProperty(layer, 'fill-color', { property: this.colorField, stops: stops[this.colorField] });
             });
             store.commit('setCurrentViewValues', { extrema: minmax, all: valueBuckets });
         },
