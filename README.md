@@ -21,4 +21,4 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 
 You will need to have docker and docker-compose installed.
 
-To run the application on your system, listening on port 80, simply run `docker-compose up` in the top level directory of the repo.
+To run the application on your system, listening on port 80, simply run `yarn run build && docker-compose up` in the top level directory of the repo.
