@@ -2,7 +2,9 @@
 
 > BCIC housing data visualization
 
-## Build Setup
+Demo link: http://housing-viz-demo.foundryspatial.com/
+
+## Development
 
 ``` bash
 # install dependencies
@@ -15,10 +17,28 @@ yarn run dev
 yarn run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Run the app on your system
 
-## Load the app on your system
+Requirements:
 
-You will need to have docker and docker-compose installed.
+- [yarn](https://yarnpkg.com/) for building the project
+- [docker-compose](https://www.docker.com/) to deploy with Docker
 
-To run the application on your system, listening on port 80, simply run `yarn run build && docker-compose up` in the top level directory of the repo.
+### Build the project
+
+``` bash
+yarn run build
+```
+
+### Build & run the Docker image
+
+``` bash
+docker-compose build
+```
+To run the application on your system, listening on port 80, use `docker-compose`:
+
+``` bash
+docker-compose up
+```
+
+Or manually build and run the Dockerfile in the project root.
