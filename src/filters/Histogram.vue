@@ -39,13 +39,11 @@ export default {
     },
     methods: {
         drawChart() {
-            const formatCount = d3.format(',.0f');
-
-            let svg = d3.select(this.svgElement);
-            let margin = { top: 4, right: 30, bottom: 4, left: 30 };
-            let width = +this.svgElement.clientWidth - margin.left - margin.right;
-            let height = +this.svgElement.clientHeight - margin.top - margin.bottom;
-            let g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+            const svg = d3.select(this.svgElement);
+            const margin = { top: 4, right: 30, bottom: 4, left: 30 };
+            const width = +this.svgElement.clientWidth - margin.left - margin.right;
+            const height = +this.svgElement.clientHeight - margin.top - margin.bottom;
+            const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
 
             const x = d3.scaleLinear()
             .rangeRound([0, width]);
