@@ -7,8 +7,8 @@
                 Select up to {{ maxFilters }} filters
                 <button class="delete is-medium is-pulled-right" @click="closeModal"></button>
             </p>
-            <label v-for="filter in filters" class="panel-block checkbox" :class="{ 'is-disabled': disabled(filter.name) }">
-                <input :disabled="disabled(filter.name)" v-model="checkedFilters" :value="filter.name" type="checkbox">
+            <label v-for="filter in filters" class="panel-block checkbox" :class="{ 'is-disabled': disabled(filter.keyName) }">
+                <input :disabled="disabled(filter.keyName)" v-model="checkedFilters" :value="filter.keyName" type="checkbox">
                 {{ filter.name }}
             </label>
             <div class="panel-block">
@@ -71,7 +71,7 @@ export default {
     },
     created() {
         // sync the local checkedFilters with the store's enabledFilters
-        const initial = store.state.enabledFilters.map(f => f.name);
+        const initial = store.state.enabledFilters.map(f => f.keyName);
         this.checkedFilters = initial;
     },
 };

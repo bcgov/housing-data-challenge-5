@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        vendor: ['vue', 'mapbox-gl/dist/mapbox-gl'],
+        vendor: ['vue', 'mapbox-gl/dist/mapbox-gl', 'd3'],
         main: './src/main.js',
     },
     output: {

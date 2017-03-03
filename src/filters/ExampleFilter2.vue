@@ -1,7 +1,7 @@
 <template>
-<div class="filter">
     <label>this is some OTHER filter</label>
     <input type="text">
+<div class="filter-body">
 </div>
 </template>
 
