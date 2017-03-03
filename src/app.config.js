@@ -12,7 +12,7 @@ export default {
         ],
     },
     mapboxgl: {
-        baseStyle: 'mapbox://styles/foundryspatial/cizkanfi800042rkbv10r6qbt',
+        baseStyle: 'mapbox://styles/foundryspatial/cizt0a0af008o2ro18l6perna',
         accessToken: 'pk.eyJ1IjoiZm91bmRyeXNwYXRpYWwiLCJhIjoiNzk1YTU3OTZmMjZiMzQ3YzM5YzIwODNiNjhkM2MzMDQifQ.sfy6Aux5O-BBqbSVNaec1A',
     },
 };
