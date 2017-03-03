@@ -1,30 +1,17 @@
-import exampleComponent from './ExampleFilter.vue';
-import exampleComponent2 from './ExampleFilter2.vue';
 import histogramFilter from './Histogram.vue';
 import Filter from './class/Filter';
 
-const heightFilter = new Filter('heightFilter', exampleComponent, { field: 'height' });
-const widthFilter = new Filter('widthFilter', exampleComponent2, { field: 'width' });
-const colorFilter = new Filter('colorFilter', histogramFilter, { field: 'color' });
-const distanceFilter = new Filter('distanceFilter', exampleComponent2, { field: 'distance' });
-const weightFilter = new Filter('weightFilter', exampleComponent2, { field: 'weight' });
-const dateFilter = new Filter('dateFilter', histogramFilter, { field: 'date' });
-const timeFilter = new Filter('timeFilter', histogramFilter, { field: 'time' });
-const singleLangSpeakers = new Filter('Single Language Speakers', histogramFilter, { field: 'single_language_total' });
-const multiLangSpeakers = new Filter('Multiple Language Speakers', histogramFilter, { field: 'multi_language_total' });
-const adults1830 = new Filter('Adults 18-30', histogramFilter, { field: 'age_18_30_m' });
+// create filter objects
+const singleLangSpeakers = new Filter('Single Language Speakers', histogramFilter, { field: 'ml_311' });
+const multiLangSpeakers = new Filter('Multiple Language Speakers', histogramFilter, { field: 'ml_22811' });
+const adults1830 = new Filter('Adults 18-30', histogramFilter, { field: 'cp_141516172' });
+const assessedBuilding = new Filter('Total Assessed - Building', histogramFilter, { field: 'sum_total_assessed_building' });
 
 const filters = {
-    heightFilter,
-    widthFilter,
-    colorFilter,
-    distanceFilter,
-    weightFilter,
-    dateFilter,
-    timeFilter,
     singleLangSpeakers,
     multiLangSpeakers,
     adults1830,
+    assessedBuilding,
 };
 
 // add the key name to each object for easy retrieval
