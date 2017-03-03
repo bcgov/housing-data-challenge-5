@@ -16,6 +16,7 @@ export default new Vuex.Store({
             filters.adults1830,
         ],
         mapColorField: config.map.colorField,
+        currentViewValues: { extrema: {}, all: {} },
     },
     mutations: {
         setMap(state, map) {
@@ -37,6 +38,9 @@ export default new Vuex.Store({
         },
         changeMapView(state, mapView) {
             Vue.set(state, 'mapView', mapView);
+        },
+        setCurrentViewValues(state, values) {
+            Vue.set(state, 'currentViewValues', values);
         },
     },
 });
