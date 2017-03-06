@@ -87,8 +87,6 @@ export default {
 
             // assume the colorField is the only one we want to figure out right now.
 
-//            const key = this.colorField;
-
             Object.keys(mapColors).forEach((key) => {
                 minmax[key] = { min: undefined, max: undefined };
                 valueBuckets[key] = [];
@@ -96,10 +94,10 @@ export default {
                 stops[key] = paintProperty.stops;
             });
 
-            // I don't think this actually gives us much of a speed boost
             const tr = this.map.project(this.map.getBounds().getNorthEast());
             const bl = this.map.project(this.map.getBounds().getSouthWest());
 
+            // for each rendered feature combine all statistics into certain stats
             this.map.queryRenderedFeatures(
                 [tr, bl],
                 { layers: config.map.dataLayers }).forEach((feature) => {
@@ -115,7 +113,10 @@ export default {
                         }
                     });
                 });
+            // temp is used for the current stops information for the legend.
             const temp = [];
+
+            // calculate the steps for coloring the map.
             Object.keys(mapColors).forEach((key) => {
                 const count = stops[key].length;
                 const incr = Math.ceil((minmax[key].max - minmax[key].min) / count);
@@ -123,6 +124,7 @@ export default {
                     stops[key][i] = [Math.floor(minmax[key].min + (incr * i)), stops[key][i][1]];
                     if (key === this.colorField) {
                         // bloody legend! too right!
+                        // here is where the legend information is compiled, including the increment value
                         temp.push({
                             stop: Math.floor(minmax[key].min + (incr * i)),
                             color: stops[key][i][1],
@@ -131,10 +133,14 @@ export default {
                     }
                 }
             });
+            // store the current stops in Vue data so we can dynamically update the Legend.
             this.stops = temp;
+
+            // set the paint property as per our generated stops.
             this.layers.forEach((layer) => {
                 this.map.setPaintProperty(layer, 'fill-color', { property: this.colorField, stops: stops[this.colorField] });
             });
+
             store.commit('setCurrentViewValues', { extrema: minmax, all: valueBuckets });
         },
     },
