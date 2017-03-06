@@ -77,12 +77,14 @@ export default {
 
             // assume the colorField is the only one we want to figure out right now.
 
-            const key = this.colorField;
+//            const key = this.colorField;
 
-            minmax[key] = { min: undefined, max: undefined };
-            valueBuckets[key] = [];
-            const paintProperty = mapColors[key].paintProperty();
-            stops[key] = paintProperty.stops;
+            Object.keys(mapColors).forEach((key) => {
+                minmax[key] = { min: undefined, max: undefined };
+                valueBuckets[key] = [];
+                const paintProperty = mapColors[key].paintProperty();
+                stops[key] = paintProperty.stops;
+            });
 
             // I don't think this actually gives us much of a speed boost
             const tr = this.map.project(this.map.getBounds().getNorthEast());
@@ -91,21 +93,25 @@ export default {
             this.map.queryRenderedFeatures(
                 [tr, bl],
                 { layers: config.map.dataLayers }).forEach((feature) => {
-                    valueBuckets[key].push(feature.properties[key]);
-                    if (minmax[key].min === undefined
-                        || minmax[key].min > feature.properties[key]) {
-                        minmax[key].min = feature.properties[key];
-                    }
-                    if (minmax[key].max === undefined
-                        || minmax[key].max < feature.properties[key]) {
-                        minmax[key].max = feature.properties[key];
-                    }
+                    Object.keys(mapColors).forEach((key) => {
+                        valueBuckets[key].push(feature.properties[key]);
+                        if (minmax[key].min === undefined
+                            || minmax[key].min > feature.properties[key]) {
+                            minmax[key].min = feature.properties[key];
+                        }
+                        if (minmax[key].max === undefined
+                            || minmax[key].max < feature.properties[key]) {
+                            minmax[key].max = feature.properties[key];
+                        }
+                    });
                 });
-            const count = stops[key].length;
-            const incr = (minmax[key].max - minmax[key].min) / count;
-            for (let i = 0; i < count; i += 1) {
-                stops[key][i] = [Math.round(minmax[key].min + (incr * i)), stops[key][i][1]];
-            }
+            Object.keys(mapColors).forEach((key) => {
+                const count = stops[key].length;
+                const incr = (minmax[key].max - minmax[key].min) / count;
+                for (let i = 0; i < count; i += 1) {
+                    stops[key][i] = [Math.round(minmax[key].min + (incr * i)), stops[key][i][1]];
+                }
+            });
             this.layers.forEach((layer) => {
                 this.map.setPaintProperty(layer, 'fill-color', { property: this.colorField, stops: stops[this.colorField] });
             });
