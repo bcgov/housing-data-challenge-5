@@ -1,7 +1,14 @@
 <template>
 <div class="map-wrap">
     <div id="map"></div>
+    <div id="legend" class="legend">
+        <h4>{{legendTitle}}</h4>
+        <table>
+            <tr v-for="stop in stops"><td><span v-bind:style="{ backgroundColor: stop.color }"></span></td><td>{{ stop.stop }}</td><td>&nbsp;-&nbsp;</td><td>{{ stop.stop + increment - 1 }}</td></tr>
+        </table>
+    </div>
 </div>
+
 </template>
 
 <script>
@@ -21,6 +28,9 @@ export default {
         return {
             map: {},
             layers: config.map.dataLayers,
+            stops: [],
+            increment: undefined,
+            legendTitle: 'Legend',
         };
     },
     mounted() {
@@ -105,13 +115,23 @@ export default {
                         }
                     });
                 });
+            const temp = [];
             Object.keys(mapColors).forEach((key) => {
                 const count = stops[key].length;
-                const incr = (minmax[key].max - minmax[key].min) / count;
+                const incr = Math.ceil((minmax[key].max - minmax[key].min) / count);
                 for (let i = 0; i < count; i += 1) {
-                    stops[key][i] = [Math.round(minmax[key].min + (incr * i)), stops[key][i][1]];
+                    stops[key][i] = [Math.floor(minmax[key].min + (incr * i)), stops[key][i][1]];
+                    if (key === this.colorField) {
+                        // bloody legend! too right!
+                        temp.push({
+                            stop: Math.floor(minmax[key].min + (incr * i)),
+                            color: stops[key][i][1],
+                        });
+                        this.increment = incr;
+                    }
                 }
             });
+            this.stops = temp;
             this.layers.forEach((layer) => {
                 this.map.setPaintProperty(layer, 'fill-color', { property: this.colorField, stops: stops[this.colorField] });
             });
