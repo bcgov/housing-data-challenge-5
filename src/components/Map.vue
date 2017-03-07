@@ -124,7 +124,6 @@ export default {
             this.layers.forEach((layer) => {
                 this.map.setPaintProperty(layer, 'fill-color', paintProperty);
             });
-            this.setCurrentValues();
         },
         setCurrentValues() {
             // wait if the map isn't ready yet
@@ -203,6 +202,7 @@ export default {
     watch: {
         colorField(val) {
             this.updateColors(val);
+            this.setCurrentValues();
         },
         enabledFilters() {
             this.setCurrentValues();
