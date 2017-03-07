@@ -22,6 +22,8 @@ import store from '../store';
 
 import mapColors from '../mapColors';
 
+const debounce = require('lodash.debounce'); // so we're not pegging on the setMapPropertiesMinMax() method.
+
 export default {
     name: 'map-viz',
     data() {
@@ -34,6 +36,22 @@ export default {
         };
     },
     mounted() {
+        // debouncing these functions allows us to make sure we don't hammer the methods too
+        // frequently.
+        const debouncedMapProperties = debounce(this.setMapPropertiesMinMax, 300);
+        const debouncedMoveEnd = debounce(() => {
+            const zoom = this.map.getZoom();
+            const bounds = this.map.getBounds();
+            const bearing = this.map.getBearing();
+            const pitch = this.map.getPitch();
+            store.commit('changeMapView', {
+                zoom,
+                bounds,
+                bearing,
+                pitch,
+            });
+        }, 300);
+
         mapboxgl.accessToken = config.mapboxgl.accessToken;
         this.map = new mapboxgl.Map({
             container: 'map',
@@ -48,22 +66,21 @@ export default {
             // centralize the map object in the store
             store.commit('setMap', this.map);
             // initialize the data for view information.
+            debouncedMapProperties();
         });
         this.map.on('load', () => {
-            this.setMapPropertiesMinMax();
+            debouncedMapProperties();
         });
         // track map view in the store
         this.map.on('moveend', () => {
-            this.setMapPropertiesMinMax();
-            const zoom = this.map.getZoom();
-            const bounds = this.map.getBounds();
-            const bearing = this.map.getBearing();
-            const pitch = this.map.getPitch();
-            store.commit('changeMapView', {
-                zoom,
-                bounds,
-                bearing,
-                pitch,
+            debouncedMapProperties();
+            debouncedMoveEnd();
+        });
+        this.map.on('mousemove', (e) => {
+            store.state.map.queryRenderedFeatures(e.point, {
+                layers: config.map.dataLayers,
+            }).forEach((f) => {
+                console.log(f.layer);
             });
         });
     },
@@ -124,7 +141,8 @@ export default {
                     stops[key][i] = [Math.floor(minmax[key].min + (incr * i)), stops[key][i][1]];
                     if (key === this.colorField) {
                         // bloody legend! too right!
-                        // here is where the legend information is compiled, including the increment value
+                        // here is where the legend information is compiled,
+                        // including the increment value
                         temp.push({
                             stop: Math.floor(minmax[key].min + (incr * i)),
                             color: stops[key][i][1],
