@@ -98,7 +98,7 @@ export default {
     },
     watch: {
         // redraw the chart if the data changes
-        dataField() {
+        chartData() {
             this.drawChart();
         },
     },
