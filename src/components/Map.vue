@@ -7,6 +7,7 @@
             <tr v-for="stop in stops"><td><span v-bind:style="{ backgroundColor: stop.color }"></span></td><td>{{ stop.stop }}</td><td>&nbsp;-&nbsp;</td><td>{{ stop.stop + increment - 1 }}</td></tr>
         </table>
     </div>
+    <div class="feature-info" v-bind:style="{ top: featureInfo.top, left: featureInfo.left }">{{ featureInfo.text }}</div>
 </div>
 
 </template>
@@ -34,6 +35,10 @@ export default {
             stops: [],
             increment: undefined,
             legendTitle: 'Legend',
+            featureInfo: {
+                top:'10px',
+                left:'10px',
+                text:'Hover over an area to learn more about it.'},
         };
     },
     mounted() {
@@ -80,13 +85,30 @@ export default {
             debouncedMapProperties();
             debouncedMoveEnd();
         });
-        this.map.on('mousemove', (e) => {
+
+        // you can access the geometry of the feature in f.geometry
+        // however, currently I can only find information about adding
+        // geometry by adding an entirely new layer :O that's very
+        // expensive so it's not really worth it.
+
+        let showFeatureInfo = (e) => {
             store.state.map.queryRenderedFeatures(e.point, {
                 layers: config.map.dataLayers,
             }).forEach((f) => {
-//                console.log(f.layer);
+                const feature_id = '' + f.id;
+                if( store.state.currentFeature !== feature_id ){
+                    store.commit( 'setCurrentFeature', feature_id );
+                    if( f.properties[this.colorField] ){
+                        this.featureInfo.text = f.properties[this.colorField];
+                    }
+                    // have the blurb say something interesting about the
+                    // feature
+                }
             });
-        });
+        }
+        this.map.on('click', showFeatureInfo);
+        this.map.on('tap', showFeatureInfo);
+
     },
     computed: {
         colorField() {
