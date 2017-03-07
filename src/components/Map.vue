@@ -32,19 +32,20 @@ export default {
             zoom: config.map.zoom,
         });
 
-        this.map.on('style.load', () => {
-            // apply default colors
-//            this.updateColors(this.colorField);
+        //
+        this.map.on('load', () => {
             // centralize the map object in the store
             store.commit('setMap', this.map);
+
+            // @TODO: TEMP
+            window.map = this.map;
+
             // initialize the data for view information.
-        });
-        this.map.on('load', () => {
-            this.setMapPropertiesMinMax();
+            this.setCurrentValues();
         });
         // track map view in the store
         this.map.on('moveend', () => {
-            this.setMapPropertiesMinMax();
+            this.setCurrentValues();
             const zoom = this.map.getZoom();
             const bounds = this.map.getBounds();
             const bearing = this.map.getBearing();
@@ -61,6 +62,9 @@ export default {
         colorField() {
             return store.state.mapColorField;
         },
+        enabledFilters() {
+            return store.state.enabledFilters;
+        },
     },
     methods: {
         updateColors(val) {
@@ -69,15 +73,17 @@ export default {
                 this.map.setPaintProperty(layer, 'fill-color', paintProperty);
             });
         },
-        setMapPropertiesMinMax() {
+        setCurrentValues() {
+            // wait if the map isn't ready yet
+            if (this.$store.state.map !== this.map) {
+                return;
+            }
+
             // create a list of properties and their min/max values.
             const minmax = {}; // for annoying eslint rules.
             const valueBuckets = {};
             const stops = {};
 
-            // assume the colorField is the only one we want to figure out right now.
-
-//            const key = this.colorField;
 
             Object.keys(mapColors).forEach((key) => {
                 minmax[key] = { min: undefined, max: undefined };
@@ -86,14 +92,19 @@ export default {
                 stops[key] = paintProperty.stops;
             });
 
-            // I don't think this actually gives us much of a speed boost
-            const tr = this.map.project(this.map.getBounds().getNorthEast());
-            const bl = this.map.project(this.map.getBounds().getSouthWest());
+            // collect values for the filtered fields and the map color field
+            const dataFields = this.enabledFilters.map(f => f.config.field);
+            dataFields.push(this.colorField);
+
+            // query within viewport bounding box
+            const mapBounds = this.map.getBounds();
+            const tr = this.map.project(mapBounds.getNorthEast());
+            const bl = this.map.project(mapBounds.getSouthWest());
 
             this.map.queryRenderedFeatures(
                 [tr, bl],
-                { layers: config.map.dataLayers }).forEach((feature) => {
-                    Object.keys(mapColors).forEach((key) => {
+                { layers: this.layers }).forEach((feature) => {
+                    dataFields.forEach((key) => {
                         valueBuckets[key].push(feature.properties[key]);
                         if (minmax[key].min === undefined
                             || minmax[key].min > feature.properties[key]) {
@@ -121,6 +132,9 @@ export default {
     watch: {
         colorField(val) {
             this.updateColors(val);
+        },
+        enabledFilters() {
+            this.setCurrentValues();
         },
     },
 };
