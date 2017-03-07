@@ -14,6 +14,7 @@
 <script>
 // import libraries
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
+import * as d3 from 'd3';
 
 // config
 import config from '../app.config';
@@ -38,7 +39,7 @@ export default {
     mounted() {
         // debouncing these functions allows us to make sure we don't hammer the methods too
         // frequently.
-        const debouncedMapProperties = debounce(this.setMapPropertiesMinMax, 300);
+        const debouncedMapProperties = debounce(this.setCurrentValues, 300);
         const debouncedMoveEnd = debounce(() => {
             const zoom = this.map.getZoom();
             const bounds = this.map.getBounds();
@@ -60,11 +61,14 @@ export default {
             zoom: config.map.zoom,
         });
 
-        this.map.on('style.load', () => {
-            // apply default colors
-//            this.updateColors(this.colorField);
+        //
+        this.map.on('load', () => {
             // centralize the map object in the store
             store.commit('setMap', this.map);
+
+            // @TODO: TEMP
+            window.map = this.map;
+
             // initialize the data for view information.
             debouncedMapProperties();
         });
@@ -80,13 +84,16 @@ export default {
             store.state.map.queryRenderedFeatures(e.point, {
                 layers: config.map.dataLayers,
             }).forEach((f) => {
-                console.log(f.layer);
+//                console.log(f.layer);
             });
         });
     },
     computed: {
         colorField() {
             return store.state.mapColorField;
+        },
+        enabledFilters() {
+            return store.state.enabledFilters;
         },
     },
     methods: {
@@ -96,42 +103,52 @@ export default {
                 this.map.setPaintProperty(layer, 'fill-color', paintProperty);
             });
         },
-        setMapPropertiesMinMax() {
+        setCurrentValues() {
+            // wait if the map isn't ready yet
+            if (this.$store.state.map !== this.map) {
+                return;
+            }
+
             // create a list of properties and their min/max values.
-            const minmax = {}; // for annoying eslint rules.
+            const minmax = {};
             const valueBuckets = {};
             const stops = {};
 
-            // assume the colorField is the only one we want to figure out right now.
+            // collect values for the filtered fields and the map color field
+            const dataFields = this.enabledFilters.map(f => f.config.field);
+            dataFields.push(this.colorField);
+
 
             Object.keys(mapColors).forEach((key) => {
                 minmax[key] = { min: undefined, max: undefined };
-                valueBuckets[key] = [];
                 const paintProperty = mapColors[key].paintProperty();
                 stops[key] = paintProperty.stops;
             });
 
-            const tr = this.map.project(this.map.getBounds().getNorthEast());
-            const bl = this.map.project(this.map.getBounds().getSouthWest());
+            // query within viewport bounding box
+            const mapBounds = this.map.getBounds();
+            const tr = this.map.project(mapBounds.getNorthEast());
+            const bl = this.map.project(mapBounds.getSouthWest());
 
             // for each rendered feature combine all statistics into certain stats
             this.map.queryRenderedFeatures(
                 [tr, bl],
-                { layers: config.map.dataLayers }).forEach((feature) => {
-                    Object.keys(mapColors).forEach((key) => {
-                        valueBuckets[key].push(feature.properties[key]);
-                        if (minmax[key].min === undefined
-                            || minmax[key].min > feature.properties[key]) {
-                            minmax[key].min = feature.properties[key];
+                { layers: this.layers }).forEach((feature) => {
+                    dataFields.forEach((key) => {
+                        if (typeof valueBuckets[key] === 'undefined') {
+                            valueBuckets[key] = [];
                         }
-                        if (minmax[key].max === undefined
-                            || minmax[key].max < feature.properties[key]) {
-                            minmax[key].max = feature.properties[key];
+                        if (typeof feature.properties[key] !== 'undefined') {
+                            valueBuckets[key].push(feature.properties[key]);
                         }
                     });
                 });
             // temp is used for the current stops information for the legend.
             const temp = [];
+
+            // set minmax with d3
+            minmax[this.colorField].min = d3.min(valueBuckets[this.colorField]);
+            minmax[this.colorField].max = d3.max(valueBuckets[this.colorField]);
 
             // calculate the steps for coloring the map.
             Object.keys(mapColors).forEach((key) => {
@@ -140,9 +157,7 @@ export default {
                 for (let i = 0; i < count; i += 1) {
                     stops[key][i] = [Math.floor(minmax[key].min + (incr * i)), stops[key][i][1]];
                     if (key === this.colorField) {
-                        // bloody legend! too right!
-                        // here is where the legend information is compiled,
-                        // including the increment value
+                        // compile legend information, including the increment value
                         temp.push({
                             stop: Math.floor(minmax[key].min + (incr * i)),
                             color: stops[key][i][1],
@@ -165,6 +180,9 @@ export default {
     watch: {
         colorField(val) {
             this.updateColors(val);
+        },
+        enabledFilters() {
+            this.setCurrentValues();
         },
     },
 };
