@@ -38,7 +38,7 @@ export default {
             featureInfo: {
                 top: '10px',
                 left: '10px',
-                text: 'Hover over an area to learn more about it.',
+                text: 'Click or tap on an area to see its value.',
             },
         };
     },
@@ -124,6 +124,7 @@ export default {
             this.layers.forEach((layer) => {
                 this.map.setPaintProperty(layer, 'fill-color', paintProperty);
             });
+            this.setCurrentValues();
         },
         setCurrentValues() {
             // wait if the map isn't ready yet
