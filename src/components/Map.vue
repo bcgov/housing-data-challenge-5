@@ -7,6 +7,7 @@
 <script>
 // import libraries
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
+import * as d3 from 'd3';
 
 // config
 import config from '../app.config';
@@ -80,21 +81,20 @@ export default {
             }
 
             // create a list of properties and their min/max values.
-            const minmax = {}; // for annoying eslint rules.
+            const minmax = {};
             const valueBuckets = {};
             const stops = {};
-
-
-            Object.keys(mapColors).forEach((key) => {
-                minmax[key] = { min: undefined, max: undefined };
-                valueBuckets[key] = [];
-                const paintProperty = mapColors[key].paintProperty();
-                stops[key] = paintProperty.stops;
-            });
 
             // collect values for the filtered fields and the map color field
             const dataFields = this.enabledFilters.map(f => f.config.field);
             dataFields.push(this.colorField);
+
+
+            Object.keys(mapColors).forEach((key) => {
+                minmax[key] = { min: undefined, max: undefined };
+                const paintProperty = mapColors[key].paintProperty();
+                stops[key] = paintProperty.stops;
+            });
 
             // query within viewport bounding box
             const mapBounds = this.map.getBounds();
@@ -105,17 +105,20 @@ export default {
                 [tr, bl],
                 { layers: this.layers }).forEach((feature) => {
                     dataFields.forEach((key) => {
-                        valueBuckets[key].push(feature.properties[key]);
-                        if (minmax[key].min === undefined
-                            || minmax[key].min > feature.properties[key]) {
-                            minmax[key].min = feature.properties[key];
+                        if (typeof valueBuckets[key] === 'undefined') {
+                            valueBuckets[key] = [];
                         }
-                        if (minmax[key].max === undefined
-                            || minmax[key].max < feature.properties[key]) {
-                            minmax[key].max = feature.properties[key];
+                        if (typeof feature.properties[key] !== 'undefined') {
+                            valueBuckets[key].push(feature.properties[key]);
                         }
                     });
                 });
+
+            // set minmax with d3
+            minmax[this.colorField].min = d3.min(valueBuckets[this.colorField]);
+            minmax[this.colorField].max = d3.max(valueBuckets[this.colorField]);
+
+            // apply color rules
             Object.keys(mapColors).forEach((key) => {
                 const count = stops[key].length;
                 const incr = (minmax[key].max - minmax[key].min) / count;
