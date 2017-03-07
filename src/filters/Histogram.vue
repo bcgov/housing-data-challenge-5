@@ -2,9 +2,6 @@
 <div class="filter-body" v-bind:class="[ this.dataField ]">
     <h3>{{ title }}</h3>
     <svg width="100%" height="30px" class="histogram">
-        <g style="transform: translate(0, 10px)">
-
-        </g>
     </svg>
 </div>
 </template>
@@ -24,9 +21,9 @@ export default {
     },
     computed: {
         chartData() {
-            // @TODO: fetch the data in the viewport for this datapoint
-            // return d3.range(350).map(d3.randomBates(10));
-            return this.$store.state.currentViewValues.all.ml_22811;
+            // fetch the data in the viewport for this datapoint
+            const field = this.dataField;
+            return this.$store.state.currentViewValues.all[field];
         },
         title() {
             return this.filterObject.name;
@@ -40,8 +37,22 @@ export default {
     },
     methods: {
         drawChart() {
+            // wait until the chart data is ready
+            if ((!this.chartData) || this.chartData.length === 0) {
+                return;
+            }
+
+            // wait until the map is ready
+            if (!this.$store.state.map.style) {
+                return;
+            }
+
             const formatCount = d3.format(',.0f');
             const svg = d3.select(this.svgElement);
+
+            // clear the SVG for redraws
+            svg.selectAll('*').remove();
+
             const margin = { top: 4, right: 30, bottom: 22, left: 30 };
             const width = +this.svgElement.clientWidth - margin.left - margin.right;
             const height = +this.svgElement.clientHeight - margin.top - margin.bottom;
@@ -98,7 +109,7 @@ export default {
     },
     watch: {
         // redraw the chart if the data changes
-        dataField() {
+        chartData() {
             this.drawChart();
         },
     },
