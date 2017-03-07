@@ -36,9 +36,10 @@ export default {
             increment: undefined,
             legendTitle: 'Legend',
             featureInfo: {
-                top:'10px',
-                left:'10px',
-                text:'Hover over an area to learn more about it.'},
+                top: '10px',
+                left: '10px',
+                text: 'Hover over an area to learn more about it.',
+            },
         };
     },
     mounted() {
@@ -91,24 +92,23 @@ export default {
         // geometry by adding an entirely new layer :O that's very
         // expensive so it's not really worth it.
 
-        let showFeatureInfo = (e) => {
+        const showFeatureInfo = (e) => {
             store.state.map.queryRenderedFeatures(e.point, {
                 layers: config.map.dataLayers,
             }).forEach((f) => {
-                const feature_id = '' + f.id;
-                if( store.state.currentFeature !== feature_id ){
-                    store.commit( 'setCurrentFeature', feature_id );
-                    if( f.properties[this.colorField] ){
+                const featureId = `${f.id}`;
+                if (store.state.currentFeature !== featureId) {
+                    store.commit('setCurrentFeature', featureId);
+                    if (f.properties[this.colorField]) {
                         this.featureInfo.text = f.properties[this.colorField];
                     }
                     // have the blurb say something interesting about the
                     // feature
                 }
             });
-        }
+        };
         this.map.on('click', showFeatureInfo);
         this.map.on('tap', showFeatureInfo);
-
     },
     computed: {
         colorField() {
