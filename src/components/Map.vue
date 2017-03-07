@@ -127,7 +127,6 @@ export default {
             // temp is used for the current stops information for the legend.
             const temp = [];
 
-
             // set minmax with d3
             minmax[this.colorField].min = d3.min(valueBuckets[this.colorField]);
             minmax[this.colorField].max = d3.max(valueBuckets[this.colorField]);
@@ -140,7 +139,7 @@ export default {
                     stops[key][i] = [Math.floor(minmax[key].min + (incr * i)), stops[key][i][1]];
                     if (key === this.colorField) {
                         // bloody legend! too right!
-                        // here is where the legend information is compiled, including the increment value
+                        // compile legend information, including the increment value
                         temp.push({
                             stop: Math.floor(minmax[key].min + (incr * i)),
                             color: stops[key][i][1],
