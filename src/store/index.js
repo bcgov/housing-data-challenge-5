@@ -17,6 +17,7 @@ export default new Vuex.Store({
         ],
         mapColorField: config.map.colorField,
         currentViewValues: { extrema: {}, all: {} },
+        currentFeature: false,
     },
     mutations: {
         setMap(state, map) {
@@ -41,6 +42,9 @@ export default new Vuex.Store({
         },
         setCurrentViewValues(state, values) {
             Vue.set(state, 'currentViewValues', values);
+        },
+        setCurrentFeature(state, feature) {
+            Vue.set(state, 'currentFeature', feature);
         },
     },
 });

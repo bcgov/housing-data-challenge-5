@@ -7,6 +7,7 @@
             <tr v-for="stop in stops"><td><span v-bind:style="{ backgroundColor: stop.color }"></span></td><td>{{ stop.stop }}</td><td>&nbsp;-&nbsp;</td><td>{{ stop.stop + increment - 1 }}</td></tr>
         </table>
     </div>
+    <div class="feature-info" v-bind:style="{ top: featureInfo.top, left: featureInfo.left }">{{ featureInfo.text }}</div>
 </div>
 
 </template>
@@ -23,6 +24,8 @@ import store from '../store';
 
 import mapColors from '../mapColors';
 
+const debounce = require('lodash.debounce'); // so we're not pegging on the setMapPropertiesMinMax() method.
+
 export default {
     name: 'map-viz',
     data() {
@@ -32,9 +35,30 @@ export default {
             stops: [],
             increment: undefined,
             legendTitle: 'Legend',
+            featureInfo: {
+                top: '10px',
+                left: '10px',
+                text: 'Click or tap on an area to see its value.',
+            },
         };
     },
     mounted() {
+        // debouncing these functions allows us to make sure we don't hammer the methods too
+        // frequently.
+        const debouncedMapProperties = debounce(this.setCurrentValues, 300);
+        const debouncedMoveEnd = debounce(() => {
+            const zoom = this.map.getZoom();
+            const bounds = this.map.getBounds();
+            const bearing = this.map.getBearing();
+            const pitch = this.map.getPitch();
+            store.commit('changeMapView', {
+                zoom,
+                bounds,
+                bearing,
+                pitch,
+            });
+        }, 300);
+
         mapboxgl.accessToken = config.mapboxgl.accessToken;
         this.map = new mapboxgl.Map({
             container: 'map',
@@ -49,26 +73,41 @@ export default {
             store.commit('setMap', this.map);
 
             // initialize the data for view information.
-            this.setCurrentValues();
-
+            debouncedMapProperties();
             // apply filters when their values update
             this.$root.$on('filters.updatedValues', this.applyFilters);
         });
+        this.map.on('load', () => {
+            debouncedMapProperties();
+        });
         // track map view in the store
         this.map.on('moveend', () => {
-            this.clearFilters();
-            this.setCurrentValues();
-            const zoom = this.map.getZoom();
-            const bounds = this.map.getBounds();
-            const bearing = this.map.getBearing();
-            const pitch = this.map.getPitch();
-            store.commit('changeMapView', {
-                zoom,
-                bounds,
-                bearing,
-                pitch,
-            });
+            debouncedMapProperties();
+            debouncedMoveEnd();
         });
+
+        // you can access the geometry of the feature in f.geometry
+        // however, currently I can only find information about adding
+        // geometry by adding an entirely new layer :O that's very
+        // expensive so it's not really worth it.
+
+        const showFeatureInfo = (e) => {
+            store.state.map.queryRenderedFeatures(e.point, {
+                layers: config.map.dataLayers,
+            }).forEach((f) => {
+                const featureId = `${f.id}`;
+                if (store.state.currentFeature !== featureId) {
+                    store.commit('setCurrentFeature', featureId);
+                    if (f.properties[this.colorField]) {
+                        this.featureInfo.text = f.properties[this.colorField];
+                    }
+                    // have the blurb say something interesting about the
+                    // feature
+                }
+            });
+        };
+        this.map.on('click', showFeatureInfo);
+        this.map.on('tap', showFeatureInfo);
     },
     computed: {
         colorField() {
@@ -139,7 +178,6 @@ export default {
                 for (let i = 0; i < count; i += 1) {
                     stops[key][i] = [Math.floor(minmax[key].min + (incr * i)), stops[key][i][1]];
                     if (key === this.colorField) {
-                        // bloody legend! too right!
                         // compile legend information, including the increment value
                         temp.push({
                             stop: Math.floor(minmax[key].min + (incr * i)),
@@ -186,6 +224,7 @@ export default {
     watch: {
         colorField(val) {
             this.updateColors(val);
+            this.setCurrentValues();
         },
         enabledFilters() {
             this.setCurrentValues();

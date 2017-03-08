@@ -140,9 +140,16 @@ html, body {
         }
     }
 }
-
-
-
+.feature-info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255,255,255,0.7);
+    padding: 4px;
+    border-radius: 4px;
+    max-width: 400px;
+    max-height: 200px;
+}
 
 .filters {
     flex-grow: 1;
