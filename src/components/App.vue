@@ -106,6 +106,51 @@ html, body {
     flex-flow: column;
 }
 
+.legend {
+    background-color: #fff;
+    border-radius: 3px;
+    bottom: 30px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    padding: 10px;
+    position: absolute;
+    right: 10px;
+    z-index: 1;
+    top: 10px;
+    height: 185px;
+
+    h4 {
+        margin: 0 0 10px;
+        text-align:center;
+        font-weight: bold;
+    }
+    table {
+        td {
+            text-align:right;
+            &:last-child {
+                text-align: left;
+            }
+            span {
+                border-radius: 50%;
+                display: inline-block;
+                height: 10px;
+                margin-right: 5px;
+                width: 10px;
+            }
+        }
+    }
+}
+.feature-info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255,255,255,0.7);
+    padding: 4px;
+    border-radius: 4px;
+    max-width: 400px;
+    max-height: 200px;
+}
+
 .filters {
     flex-grow: 1;
     display: flex;
