@@ -43,19 +43,20 @@ export default {
             zoom: config.map.zoom,
         });
 
-        //
+        // initialize components map is fully loaded
         this.map.on('load', () => {
             // centralize the map object in the store
             store.commit('setMap', this.map);
 
-            // @TODO: TEMP
-            window.map = this.map;
-
             // initialize the data for view information.
             this.setCurrentValues();
+
+            // apply filters when their values update
+            this.$root.$on('filters.updatedValues', this.applyFilters);
         });
         // track map view in the store
         this.map.on('moveend', () => {
+            this.clearFilters();
             this.setCurrentValues();
             const zoom = this.map.getZoom();
             const bounds = this.map.getBounds();
@@ -157,6 +158,29 @@ export default {
             });
 
             store.commit('setCurrentViewValues', { extrema: minmax, all: valueBuckets });
+        },
+        applyFilters() {
+            const newFilters = this.enabledFilters
+            .filter(f => (typeof f.config.range !== 'undefined'))
+            .map((f) => {
+                const { min, max } = f.config.range;
+                const fieldName = f.config.field;
+                return [
+                    'all',
+                    ['>', fieldName, min],
+                    ['<', fieldName, max],
+                ];
+            });
+            // prepend "all" for mapbox setFilter syntax
+            newFilters.unshift('all');
+            this.layers.forEach((layer) => {
+                this.map.setFilter(layer, newFilters);
+            });
+        },
+        clearFilters() {
+            this.layers.forEach((layer) => {
+                this.map.setFilter(layer, null);
+            });
         },
     },
     watch: {

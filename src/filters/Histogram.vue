@@ -60,10 +60,26 @@ export default {
             const xMax = d3.max(this.chartData);
             const xMin = d3.min(this.chartData);
 
+            const thisComponent = this;
+
             const x = d3.scaleLinear()
             .domain([xMin, xMax])
             .nice()
             .rangeRound([0, width]);
+
+            function brushed() {
+                let [min, max] = d3.event.selection;
+                min = x.invert(min);
+                max = x.invert(max);
+                thisComponent.filterObject.config.range = { min, max };
+
+                // fire event to inform the map that the filter object(s) have changed
+                thisComponent.$root.$emit('filters.updatedValues');
+            }
+
+            const brush = d3.brushX()
+            .extent([[0, 0], [width, height]])
+            .on('end', brushed);
 
             const bins = d3.histogram()
             .domain(x.domain())
@@ -100,6 +116,11 @@ export default {
                 }
                 return formatCount(d.length);
             });
+
+            g.append('g')
+            .attr('class', 'brush')
+            .call(brush)
+            .call(brush.move, x.range());
 
             g.append('g')
             .attr('class', 'axis axis--x')
