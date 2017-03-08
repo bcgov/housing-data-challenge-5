@@ -211,14 +211,14 @@ export default {
             });
             // prepend "all" for mapbox setFilter syntax
             newFilters.unshift('all');
-            this.layers.forEach((layer) => {
-                this.map.setFilter(layer, newFilters);
-            });
+            // this.layers.forEach((layer) => {
+            //     this.map.setFilter(layer, newFilters);
+            // });
         },
         clearFilters() {
-            this.layers.forEach((layer) => {
-                this.map.setFilter(layer, null);
-            });
+            // this.layers.forEach((layer) => {
+            //     this.map.setFilter(layer, ['!has', 'disabledFilter']);
+            // });
         },
     },
     watch: {
