@@ -1,6 +1,7 @@
 /**
- * example data fields
- * with hardcoded colors from colorbrewer
+ * Data fields for the various different filters. The values which here are 0-600 get
+ * dynamically changed when the map view changes. There are 6 values because that
+ * helps to detail the data a bit more, especially with respect to the legend.
  */
 export default {
     ml_311: {
