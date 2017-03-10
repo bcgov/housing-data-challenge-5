@@ -17,7 +17,7 @@ yarn run dev
 yarn run build
 ```
 
-## Run the app on your system
+## Running the app on your system
 
 Requirements:
 
@@ -30,15 +30,18 @@ Requirements:
 yarn run build
 ```
 
-### Build & run the Docker image
+### Build & run with Docker/Docker-Compose
+
+Use `docker-compose` to "compile" first:
 
 ``` bash
-docker-compose build
+docker-compose up builder
 ```
-To run the application on your system, listening on port 80, use `docker-compose`:
+
+To run the application on your system, listening on port 80, use docker-compose again:
 
 ``` bash
-docker-compose up
+docker-compose up web
 ```
 
 Or manually build and run the Dockerfile in the project root.
