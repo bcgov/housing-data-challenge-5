@@ -32,7 +32,7 @@ yarn run build
 
 ### Build & run with Docker/Docker-Compose
 
-Use `docker-compose` to "compile" first:
+First, use `docker-compose` to "compile":
 
 ``` bash
 docker-compose up builder
