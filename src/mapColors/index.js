@@ -1,80 +1,9 @@
 /**
- * example data fields
- * with hardcoded colors from colorbrewer
+ * Data fields for the various different filters. The values which here are 0-600 get
+ * dynamically changed when the map view changes. There are 6 values because that
+ * helps to detail the data a bit more, especially with respect to the legend.
  */
 export default {
-    ml_311: {
-        name: 'Single Language Speakers',
-        value: 'ml_311',
-        paintProperty() {
-            return {
-                property: 'ml_311',
-                stops: [
-                  [0, '#edf8e9'],
-                  [100, '#c7e9c0'],
-                  [200, '#a1d99b'],
-                  [300, '#74c476'],
-                  [400, '#41ab5d '],
-                  [500, '#238b45'],
-                  [600, '#005a32'],
-                ],
-            };
-        },
-    },
-    ml_22811: {
-        name: 'Multiple Language Speakers',
-        value: 'ml_22811',
-        paintProperty() {
-            return {
-                property: 'ml_22811',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d4b9da'],
-                  [200, '#c994c7'],
-                  [300, '#df65b0'],
-                  [400, '#e7298a'],
-                  [500, '#ce1256'],
-                  [600, '#91003f'],
-                ],
-            };
-        },
-    },
-    cp_141516172: {
-        name: 'Adults 18-30',
-        value: 'cp_141516172',
-        paintProperty() {
-            return {
-                property: 'cp_141516172',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
-                ],
-            };
-        },
-    },
-    avg_year_built: {
-        name: 'Average Year Built',
-        value: 'avg_year_built',
-        paintProperty() {
-            return {
-                property: 'avg_year_built',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
-                ],
-            };
-        },
-    },
     cp_1061: {
         name: 'Single-detached Houses',
         value: 'cp_1061',
@@ -82,13 +11,13 @@ export default {
             return {
                 property: 'cp_1061',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },
@@ -100,13 +29,13 @@ export default {
             return {
                 property: 'cp_1071',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },
@@ -118,13 +47,13 @@ export default {
             return {
                 property: 'cp_1081',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },
@@ -136,31 +65,13 @@ export default {
             return {
                 property: 'cp_1091',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
-                ],
-            };
-        },
-    },
-    cp_141516173: {
-        name: 'Females 19 to 34',
-        value: 'cp_141516173',
-        paintProperty() {
-            return {
-                property: 'cp_141516173',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },
@@ -172,192 +83,85 @@ export default {
             return {
                 property: 'cp_291',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },
     },
-    cp_321: {
-        name: 'Shacked Up',
-        value: 'cp_321',
+    cp_321p: {
+        name: 'Percent Shacked Up',
+        value: 'cp_321p',
         paintProperty() {
             return {
-                property: 'cp_321',
+                property: 'cp_321p',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },
     },
-    cp_322: {
-        name: 'Shacked Up Males',
-        value: 'cp_322',
+    cp_351p: {
+        name: 'Percent Singles',
+        value: 'cp_351p',
         paintProperty() {
             return {
-                property: 'cp_322',
+                property: 'cp_351p',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },
     },
-    cp_323: {
-        name: 'Shacked Up Females',
-        value: 'cp_323',
+    cp_52p: {
+        name: 'Percent Males',
+        value: 'cp_52p',
         paintProperty() {
             return {
-                property: 'cp_323',
+                property: 'cp_52p',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },
     },
-    cp_351: {
-        name: 'Singles',
-        value: 'cp_351',
+    cp_53p: {
+        name: 'Percent Females',
+        value: 'cp_53p',
         paintProperty() {
             return {
-                property: 'cp_351',
+                property: 'cp_53p',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
-                ],
-            };
-        },
-    },
-    cp_352: {
-        name: 'Single Males',
-        value: 'cp_352',
-        paintProperty() {
-            return {
-                property: 'cp_352',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
-                ],
-            };
-        },
-    },
-    cp_353: {
-        name: 'Single Females',
-        value: 'cp_353',
-        paintProperty() {
-            return {
-                property: 'cp_353',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
-                ],
-            };
-        },
-    },
-    cp_52: {
-        name: 'Total Males',
-        value: 'cp_52',
-        paintProperty() {
-            return {
-                property: 'cp_52',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
-                ],
-            };
-        },
-    },
-    cp_53: {
-        name: 'Total Females',
-        value: 'cp_53',
-        paintProperty() {
-            return {
-                property: 'cp_53',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
-                ],
-            };
-        },
-    },
-    ml_411: { name: 'Knowledge of French',
-        value: 'ml_411',
-        paintProperty() {
-            return {
-                property: 'ml_411',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
-                ],
-            };
-        },
-    },
-    ml_511: {
-        name: 'Knowledge of Non-official languages',
-        value: 'ml_511',
-        paintProperty() {
-            return {
-                property: 'ml_511',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },
@@ -369,13 +173,13 @@ export default {
             return {
                 property: 'mn_fmv_change',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },
@@ -387,30 +191,139 @@ export default {
             return {
                 property: 'mn_fmv_foreign_change',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },
     },
-    sum_fmv_change: { name: 'Change in Average Monthly Summed Market Value Pre/Post Aug 2016 (%)',
+    nhs_m1p: {
+        name: 'Movers 1 Year Ago Percent',
+        value: 'nhs_m1p',
+        paintProperty() {
+            return {
+                property: 'nhs_m1p',
+                stops: [
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
+                ],
+            };
+        },
+    },
+    nhs_m5p: {
+        name: 'Movers 5 Year Ago Percent',
+        value: 'nhs_m5p',
+        paintProperty() {
+            return {
+                property: 'nhs_m5p',
+                stops: [
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
+                ],
+            };
+        },
+    },
+    nhs_nm1p: {
+        name: 'Non-Movers 1 Year Ago Percent',
+        value: 'nhs_nm1p',
+        paintProperty() {
+            return {
+                property: 'nhs_nm1p',
+                stops: [
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
+                ],
+            };
+        },
+    },
+    nhs_nm5p: {
+        name: 'Non-Movers 5 Year Ago Percent',
+        value: 'nhs_nm5p',
+        paintProperty() {
+            return {
+                property: 'nhs_nm5p',
+                stops: [
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
+                ],
+            };
+        },
+    },
+    nhs_ownp: {
+        name: 'Owner Percent',
+        value: 'nhs_ownp',
+        paintProperty() {
+            return {
+                property: 'nhs_ownp',
+                stops: [
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
+                ],
+            };
+        },
+    },
+    nhs_renp: {
+        name: 'Renter Percent',
+        value: 'nhs_renp',
+        paintProperty() {
+            return {
+                property: 'nhs_renp',
+                stops: [
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
+                ],
+            };
+        },
+    },
+    sum_fmv_change: {
+        name: 'Change in Average Monthly Summed Market Value Pre/Post Aug 2016 (%)',
         value: 'sum_fmv_change',
         paintProperty() {
             return {
                 property: 'sum_fmv_change',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },
@@ -422,67 +335,13 @@ export default {
             return {
                 property: 'sum_fmv_foreign_change',
                 stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
-                ],
-            };
-        },
-    },
-    sum_total_assessed: {
-        name: 'Sum Total Assessed Value',
-        value: 'sum_total_assessed',
-        paintProperty() {
-            return {
-                property: 'sum_total_assessed',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
-                ],
-            };
-        },
-    },
-    sum_total_assessed_building: {
-        name: 'Sum Total Assessed Building',
-        value: 'sum_total_assessed_building',
-        paintProperty() {
-            return {
-                property: 'sum_total_assessed_building',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
-                ],
-            };
-        },
-    },
-    sum_total_assessed_land: {
-        name: 'Sum Total Assessed Land',
-        value: 'sum_total_assessed_land',
-        paintProperty() {
-            return {
-                property: 'sum_total_assessed_land',
-                stops: [
-                  [0, '#f1eef6'],
-                  [100, '#d0d1e6'],
-                  [200, '#a6bddb'],
-                  [300, '#74a9cf'],
-                  [400, '#3690c0 '],
-                  [500, '#0570b0'],
-                  [600, '#034e7b'],
+                    [0, '#f1eef6'],
+                    [100, '#d0d1e6'],
+                    [200, '#a6bddb'],
+                    [300, '#74a9cf'],
+                    [400, '#3690c0 '],
+                    [500, '#0570b0'],
+                    [600, '#034e7b'],
                 ],
             };
         },

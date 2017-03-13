@@ -1,5 +1,11 @@
 version: '2'
 services:
+    builder:
+        build:
+            context: .
+            dockerfile: build.Dockerfile
+        volumes:
+            - ./:/var/www
     web:
         build:
             context: .
