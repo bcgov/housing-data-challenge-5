@@ -1,4 +1,4 @@
-# housing-viz
+# Housing Data Challenge - Foundry Spatial
 
 > BCIC housing data visualization
 
