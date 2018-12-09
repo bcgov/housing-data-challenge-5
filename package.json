@@ -14,7 +14,7 @@
     "d3": "^4.6.0",
     "lodash.debounce": "^4.0.8",
     "mapbox-gl": "^0.32.1",
-    "vue": "^2.1.0",
+    "vue": "^2.5.17",
     "vuex": "^2.1.2"
   },
   "devDependencies": {
